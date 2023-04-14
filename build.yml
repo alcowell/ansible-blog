@@ -1,0 +1,34 @@
+---
+- name: Gather facts
+  hosts: all
+  vars_files:
+    - vars.yml
+  gather_facts: false
+  tasks:
+    - name: Gather facts
+      setup:
+        filter: "ansible_[!qt]*"
+      tags:
+        - always
+
+- name: Setup nginx
+  hosts: nginx
+  gather_facts: false
+  vars_files:
+    - vars.yml
+  become: true
+  roles:
+    - role: nginx
+      tags:
+        - nginx
+
+- name: Setup blog webapp
+  hosts: webapp
+  gather_facts: false
+  vars_files:
+    - vars.yml
+  become: true
+  roles:
+    - role: webapp
+      tags:
+        - webapp

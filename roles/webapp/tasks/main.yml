@@ -1,0 +1,23 @@
+---
+- name: Install packages
+  yum:
+    name: "{{ pkg_install }}"
+    state: present
+
+- name: Start docker
+  systemd:
+    name: docker
+    state: started
+    enabled: true
+
+- name: Start Docker container for blog webapp
+  vars:
+    listen_ip: "{{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}"
+  docker_container:
+    name: yosuk-blog
+    image: "{{ docker_username }}/{{ image_name }}:{{ image_tag }}"
+    restart_policy: always
+    recreate: "{{ container_recreate | default('yes') }}"
+    pull: "{{ image_pull | default('yes') }}"
+    ports:
+      - "0.0.0.0:3000:3000"

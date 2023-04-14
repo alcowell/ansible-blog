@@ -1,0 +1,11 @@
+---
+pkg_install:
+  - docker
+  - git
+
+blog_repo_name: "yosuk-blog"
+blog_repo_url: "https://github.com/alcowell/{{ blog_repo_name }}"
+
+docker_username: "alcowell"
+image_name: "yosuk-blog"
+image_tag: "latest"

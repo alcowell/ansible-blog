@@ -1,0 +1,6 @@
+---
+pkg_install:
+  - git
+
+extra_pkg_install:
+  - nginx1
